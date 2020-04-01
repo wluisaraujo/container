@@ -1,0 +1,26 @@
+---
+version: '3'
+services:
+  sonarqube:
+    image: sonarqube:8.2-community
+    container_name: sonarqube
+    privileged: true
+    tty: true
+    restart: always
+    volumes:
+      - /opt/sonar/conf:/opt/sonarqube/conf
+      - /opt/sonar/temp:/opt/sonarqube/temp
+    ports:
+      - "9000:9000"
+    ulimits:
+      nproc: 262144
+      nofile:
+        soft: 10240
+        hard: 65536
+    environment:
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: RCbQTlCLcKBTZi2bMm.rJ1
+      SONARQUBE_JDBC_URL: jdbc:postgresql://ip-server/sonar
+...
+#sonar.security.realm=LDAP -e ldap.url=ldap://someserver.local
+#curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=XXXXXXXXX"
